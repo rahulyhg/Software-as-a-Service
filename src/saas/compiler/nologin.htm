@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>Roboform</title>
+		<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+jQuery(window).bind("beforeunload",function(){
+		$.ajax({
+		url:'../date.php',		
+		success:function(res){alert("You have to pay"+res);}
+		});
+		});
+</script>
+<link href="../css/logout.css" rel="stylesheet" type="text/css" />
+
+	
+		<link rel="stylesheet" type="text/css" href="display.css">
+	</head>
+	<body style="margin:0px;">
+				<div class="topbanner" >
+				<div class="banner">
+				<h1 style="position:relative;left:40px">
+				Roboform
+				</h1>
+				</div>
+				
+					
+				
+				
+			</div>		
+		</div>
+			<center style="clear:both;position:relative;top:200px">
+			<h2 style="color:red">Login error Try again</h2>
+		<fieldset style="width:400px">
+		<legend>Login</legend>
+				<form name="login" method="post" action="logins.php">
+				
+				Username	<input type="text" class="uname" name="uname"  style="width: 150px; margin-bottom:10px;"/><br>
+				Password	<input type="password" class="pwd" name="pwd"  style="width: 150px; margin-bottom:10px;"/><br>
+				<input type="submit" value="Login">				
+				</form>
+</fieldset>
+				</center>
+					
+		
+	</body>
+</html>

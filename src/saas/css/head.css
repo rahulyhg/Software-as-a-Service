@@ -1,0 +1,15 @@
+		
+.header{
+	background:url('css/img/header.jpg');
+	width:100%;
+	height: 80px;
+}
+.heading{
+	text-align:left;
+	font-family:"Verdana";
+	color:white;
+	font-size:30px;
+	font-weight:bold;
+	font-style:oblique ;
+}
+

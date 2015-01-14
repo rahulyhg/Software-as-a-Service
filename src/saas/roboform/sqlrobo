@@ -1,0 +1,4 @@
+
+create table robo_users(uname varchar(20) primary key,pwd varchar(20) not null);
+create table robo_records(login varchar(20) not null,unames varchar(20) not null,pwd varchar(20) not null ,account varchar(20) not null,foreign key(login) references robo_users(uname));
+

@@ -1,0 +1,67 @@
+
+<html>
+<head>
+<style type="text/css">
+body {
+	margin:0px;
+	padding:0px;
+	background-color: #121213;
+	color:silver;
+}
+.header{
+	background:url('css/img/header.jpg');
+	width:100%;
+	height: 80px;
+}
+.heading{
+	text-align:left;
+	font-family:"Verdana";
+	color:white;
+	font-size:30px;
+	font-weight:bold;
+	font-style:oblique ;
+}
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+jQuery(window).bind("beforeunload",function(){
+		$.ajax({
+		url:'../date.php',		
+		success:function(res){alert("You have to pay"+res);}
+		});
+		});
+</script>
+<link href="../css/logout.css" rel="stylesheet" type="text/css" />
+<link href="../css/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link href="../css/jquery.ennui.contentslider.css" rel="stylesheet" type="text/css" media="screen,projection" />
+
+</head>
+<body>
+<div id="templatemo_menu_wrapper">
+
+    <div id="templatemo_menu">
+    
+        <ul>
+            <li><a href="../selectapp.php">My Home</a></li>
+            <li><a href="../configure.html" >Configure</a></li>
+            <li></li>
+            <li><a href="index.html" class="current">RoboLogin</a></li>
+                     <li><a href="../payments.php">Payments</a></li>
+        </ul>    	
+    
+    </div> <!-- end of templatemo_menu -->
+</div> <!-- end of menu wrapper -->
+
+<div class="header">
+	<span class="heading">Roboform</span><div class="logbtn"><a href="../signout.php">Logout</a></div>
+</div>
+
+Username already taken.Enter new USERNAME.
+<form name=f1 method=post action=logins.php>
+Username<input type=text name=uname value=""><br>
+Password<input type=password name=pwd value=""><br>
+<input type=submit name=submit value="Remember me">
+</form>
+</body>
+</html>

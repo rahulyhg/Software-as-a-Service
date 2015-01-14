@@ -1,0 +1,44 @@
+<html>
+<head>
+<title> Tax Calculator</title>
+<link href="../css/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link href="../css/jquery.ennui.contentslider.css" rel="stylesheet" type="text/css" media="screen,projection" />
+<link href="../css/logout.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="templatemo_menu_wrapper">
+
+    <div id="templatemo_menu">
+    
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../services.html" >Services</a></li>
+            <li><a href="../Architecture.html">Architecture</a></li>
+            <li><a href="signup.html">Signup</a></li>
+            <li><a href="../contact.html">Contact Us</a></li>
+	    <li><a href="tax.html" class="current">Tax Calculator</a></li>
+        </ul>    	
+    
+    </div> <!-- end of templatemo_menu -->
+</div> <!-- end of menu wrapper -->
+
+<div class="header">
+	<span class="heading">Tax Calculator</span>
+
+</div>
+
+<form name=f1 method=post action=calc.php>
+<br>
+<br>
+<font size="4">Enter your Annual Income &nbsp;<input type=text name=t1 value=""><br>
+Sex:<br>
+Male<input type=radio name=r1 value="male">&nbsp;&nbsp;
+Female<input type=radio name=r1 value="female">&nbsp;&nbsp;
+SeniorCitizen<input type=radio name=r1 value="seniorcitizen"><br>
+<br>
+<input type=submit name=submit value="Calculate">
+</font>
+</form>
+</body>
+</html>

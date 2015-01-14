@@ -1,0 +1,67 @@
+<html>
+<head>
+		<title>SQL</title>
+		<style type="text/css">
+	.subpart{
+		position:relative;
+		top:100px;
+		}
+body {
+	margin:0px;
+	padding:0px;
+	background-color: #121213;
+	color:silver;
+}
+	
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+jQuery(window).bind("beforeunload",function(){
+		$.ajax({
+		url:'../date.php',		
+		success:function(res){alert("You have to pay"+res);},
+		});
+		});
+		
+</script>
+
+<link rel="stylesheet" type="text/css" href="css/display.css">
+<link href="../css/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link href="../css/jquery.ennui.contentslider.css" rel="stylesheet" type="text/css" media="screen,projection" />
+
+<link href="../css/logout.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body style="margin:0px;" onload="iframeon()" >
+
+<div id="templatemo_menu_wrapper">
+
+    <div id="templatemo_menu">
+    
+        <ul>
+            <li><a href="../selectapp.php">My Home</a></li>
+            <li><a href="../configure.html" >Configure</a></li>
+            <li><a href="loginsql.html" class="current">SQL</a></li>
+             <li><a href="../payments.php">Payments</a></li>
+        </ul>    	
+    
+    </div> <!-- end of templatemo_menu -->
+</div> <!-- end of menu wrapper -->
+
+
+		<div class="header">
+			<div class="heading">SQL</div>
+			<span class="logbtn"><a href="../signout.php">Signout</a></span>	
+		</div>
+<br>
+
+<h3>Please enter your login and password</h3><br><br>
+<form method="post" action="create.php">
+Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="uname"><br><br>
+Password&nbsp;&nbsp;<input type="password" name="pwd"><br><br>
+<input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

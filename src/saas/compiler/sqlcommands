@@ -1,0 +1,4 @@
+create database onlinesql;
+use onlinesql;
+create table login(uname varchar(20) Primary Key,pwd varchar(20) not null);
+insert into login values('shan','123');

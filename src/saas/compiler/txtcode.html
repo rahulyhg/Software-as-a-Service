@@ -1,0 +1,124 @@
+<html>
+<head>
+<style type="text/css">
+.current{
+
+}
+body {
+	margin:0px;
+	padding:0px;
+	color:black;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size:13px;
+	line-height:1.5em; 
+	background-color: silver;
+}
+
+#lno
+{
+
+width:100%;
+padding-right:10px;
+}
+.code
+{
+float:left;
+width:92%;
+margin-left:5px;
+display:inline;
+border:1px solid white;
+}
+code,pre{
+display:inline;
+font-size:15px;
+word-wrap:normal;
+}
+.line
+{
+border-right:1px solid black; background-color:#dedede;
+width:5%;
+height:100000000000%;
+display:inline;
+float:left;
+font-size:15.2px;
+}
+.content{
+width:100%;
+}
+</style>
+
+
+<script type="text/javascript" src="jquery.js"></script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+	var adiv=document.getElementById("prgm").innerHTML;
+	var cline=$("#current>#lno").html();
+	var lines=$(".content>div:last>#lno").html();	// Last div element inside content
+	var key;
+	var i=0;
+	var t=-1;
+	var j=0;
+	var x;
+	//$("pre").html()
+	/*
+	$(".code").keydown(function (e){
+	key=e.which;
+	switch(key)
+	{
+		
+		case 13:
+			$("#current").attr("id","");
+			cline++;lines++;
+			$(".line").append("<br><span id='lno'>"+cline+"</span>");
+			
+			break;
+		
+	}
+	});	
+	*/
+	
+	
+	$(".code").keydown(function(){
+	dat=new String($("#prgm").html());
+// Buf fixed:- Code for Blank enter 
+	if(dat=="<br>")
+	$("#prgm").html("//Enter code");
+	x=new String($(".code").html());
+	t=x.search("<br");
+	while(t!=-1)
+	{			
+		j++;
+		x=x.substring(t+1);
+		t=x.search("<br>")
+	}
+	//alert(j+"  <br> "+x);
+	while(j>=lines)
+	{
+		$(".line").append("<span id='lno'>"+(++cline)+"</span><br>");
+		++lines;
+	}
+	j=0;
+	t=-1;
+	});
+	
+});
+</script>
+</head>
+<body>
+<div class="content" >
+	<div class="line" id="current">
+	
+		<span id="lno">1</span>	<br>	    	
+	</div>
+	<div class="code" id="data1">
+	<pre id="prgm">//Enter programs here  editing are valid</pre>
+	</div>
+</div>
+
+</body>
+</html>

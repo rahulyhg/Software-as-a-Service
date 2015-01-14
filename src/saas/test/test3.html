@@ -1,0 +1,479 @@
+<html>
+<head>
+<style type="text/css">
+.sblue
+{
+color:blue;
+}
+body{
+	margin:0px;
+	padding:0px;
+	color:black;
+	background-color: silver;
+}
+
+
+.sred
+{
+color:red;
+}
+.sgreen
+{
+color:green;
+}
+.sorange
+{
+color:orange;
+}
+.current{
+
+}
+#lno
+{
+
+width:100%;
+padding-right:10px;
+}
+.select
+{
+float:right;
+}
+.code
+{
+float:left;
+width:92%;
+margin-left:5px;
+display:inline;
+border:1px solid white;
+}
+code,pre{
+display:inline;
+font-size:15px;
+word-wrap:normal;
+}
+.line
+{
+border-right:1px solid black; background-color:#dedede; 
+width:5%;
+height:100000000000%;
+display:inline;
+float:left;
+font-size:15px;
+}
+.content{
+clear:both;
+float:left;
+width:100%;
+}
+</style>
+
+
+<script type="text/javascript" src="jquery.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+var classs=new Array("content","sgreen","sorange","sred","line","prgm","code","select","current","lno","sblue","spink");
+var ckey=new Array("auto","void","break","case","char","const","continue","default","do","double","else","enum","extern","float","for","goto","if","int","long","register","return","short","signed","sizeof","static","struct","switch","typedef","union","unsigned","volatile","while");;
+var cppkey=new Array("asm","delete","goto","return","typedef","auto","do","if","short","typeid","bad_cast","double","inline","signed","typename","bad_typeid","dynamic_cast","int","sizeof","union","bool","else","long","static","unsigned","break","enum","mutable","static_cast","using","case","except","namespace","struct","virtual","catch","explicit","new","switch","void","char","extern","operator","template","volatile","class","false","private","this","while","const","finally","protected","throw","const_cast","float","public","true","continue","for","register","try","default","friend","reinterpret_cast","type_info");
+
+
+var pvar=new Array("auto","register","int","short","float","double","long","char","void","extern","const","enum","signed","unsigned");
+var control=new Array("if","exit","switch","case","default","return","for","while","break","continue","label","do","goto","else");
+//ADD a span color tag whenever search is matched
+	var code;
+	var endcode="</code>";	
+	var regex=new RegExp(/\W/);
+	
+	
+	function addcode(start, str, temp,color,end)
+	{
+		var end;
+		var s1=str.substring(0,start);
+		var s2=str.substring(end);
+			code="<code class=s"+color+">";
+		return s1+code+temp+"</code>"+s2;
+	}
+	function addcomments(x)
+	{
+
+	var startd=0;
+	var color="blue";
+	var ind,ind2;
+		ind=x.indexOf("\/",startd);
+	var temp;
+			if(ind!=-1)
+			{	
+			code="<code class=s"+color+">";
+					ind2=x.charAt(ind+1);
+					if(!secondtime(ind,color,x))		//Check if coloring is second time
+					{	
+						if( ind2=="\/")				//check if its single line comment
+						{
+						ind2=x.indexOf("</span>",ind+2);	//Check for </span> denote lastline 
+						temp=x.substring(ind,ind2);	//Reqd String in quotes
+						temp=temp.replace(/class/g,"id");	//Reqd to disable color changes
+						x=addcode(ind,x,temp,color,ind2); 
+						startd=x.indexOf("<span>",ind2+endcode.length);	//Change next line
+						}
+						else if(ind2=="*")		//check if its multiline comment
+						{
+						ind2=x.indexOf("*/",ind+2);
+						temp=x.substring(ind,ind2+2);//String in quotes
+						temp=temp.replace(/class/g,"id");
+						x=addcode(ind,x,temp,color,ind2+2); 
+						startd=ind2+2;
+						}
+					}
+					
+
+					
+				
+				while((ind=x.indexOf("\/",startd))!=-1)
+				{
+				//alert("SA"+x.substring(ind,ind+14));
+					ind2=x.charAt(ind+1);
+					if(!secondtime(ind,color,x))
+					{
+				//	alert("SA"+x.substring(ind,ind+14));
+						if( ind2=="\/")
+						{
+				//			alert("SA"+x.substring(ind,ind+14));
+						ind2=x.indexOf("</span>",ind+2);
+						temp=x.substring(ind,ind2);//String in quotes
+						temp=temp.replace(/class/g,"id");
+						x=addcode(ind,x,temp,color,ind2); 
+						startd=x.indexOf("<span>",ind2+endcode.length);	//Change next line
+						}
+						else if(ind2=="*")
+						{
+						ind2=x.indexOf("*/",ind+2);
+						temp=x.substring(ind,ind2+2);//String in quotes
+						temp=temp.replace(/class/g,"id");
+						x=addcode(ind,x,temp,color,ind2+2); 
+						startd=ind2+2;
+						}
+						else
+						startd=(ind+2);
+						
+					}
+					
+				}
+			}
+		return x;	
+	}
+		
+	function catch_doub_quotes(x)
+	{
+	var startd=0;
+	var color="green";
+	var ind,ind2;
+		ind=x.indexOf("\"",startd);
+	var temp;
+			if(ind!=-1)
+			{
+			code="<code class=s"+color+">";
+				if(x.charAt(ind-1)!="\\")	//Condition for \" etc
+				{
+					ind2=x.indexOf("\"",ind+1);
+					if(!secondtime(ind,color,x))
+					{
+						temp=x.substring(ind,ind2+1);//String in quotes
+						if(!checkclass(x.substring(ind+1,ind2)))
+							x=addcode(ind,x,temp,color,ind2+1); 
+					}
+					startd=ind2+code.length+endcode.length;
+				}
+				else
+					startd=ind+1;
+				while((ind=x.indexOf("\"",startd))!=-1)
+				{
+					ind2=x.indexOf("\"",ind+1);
+					if(!secondtime(ind,color,x))
+					{
+						temp=x.substring(ind,ind2+1);//String in quotes
+						if(!checkclass(x.substring(ind+1,ind2)))
+						x=addcode(ind,x,temp,color,ind2+1); 
+					}
+					startd=ind2+code.length+endcode.length;
+				}
+			}
+		return x;	
+	}
+	function checkclass(temp)
+	{
+		if(classs.toString().search(temp)==-1)
+			return 0;
+		else return 1;
+	}
+	function secondtime(ind,color,x)
+	{
+		var coden="<code class=s"+color+">";
+		var ind2,x;
+		if((ind2=ind-coden.length)>=0){
+			if(x.substring(ind2,ind)==coden)
+			{
+			return 1;
+			}
+			else return 0;
+			}
+		return 0;
+	}
+	function catch_sing_quotes(x)
+	{
+	var startd=0;
+	var color="green";
+	var ind,ind2;
+		ind=x.indexOf("\'",startd);
+	var temp;
+			if(ind!=-1)
+			{
+			code="<code class=s"+color+">";
+				if(x.charAt(ind-1)!="\\")	//Condition for \" etc
+				{
+					ind2=x.indexOf("\'",ind+1);
+					if(!secondtime(ind,color,x))
+					{
+						temp=x.substring(ind,ind2+1);//String in quotes
+						if(!checkclass(x.substring(ind+1,ind2)))
+						x=addcode(ind,x,temp,color,ind2+1); 
+					}
+					startd=ind2+code.length+endcode.length;
+				}
+				else
+					startd=ind+1;
+				while((ind=x.indexOf("\'",startd))!=-1)
+				{
+					ind2=x.indexOf("\'",ind+1);
+					if(!secondtime(ind,color,x))
+					{
+						temp=x.substring(ind,ind2+1);//String in quotes
+						if(!checkclass(x.substring(ind+1,ind2)))
+						x=addcode(ind,x,temp,color,ind2+1); 
+					}
+					startd=ind2+code.length+endcode.length;
+				}
+			}
+		return x;	
+	}
+	
+	function check(x)
+	{
+		var key;
+
+		var start=0;	
+		var ind=-1;
+		var lan=$(".lang").val();
+		
+		
+		
+	/*	switch(lan)
+		{
+		case "gcc":
+			key=ckey;
+			break;
+		case "cpp":
+			key=cppkey;
+			break;
+		case "ruby":
+			key=rubykey;
+			break;
+		case "php":
+			key=phpkey;
+			break;
+			
+		case "perl":
+			key=plkey;
+			break;
+		case "java":
+			key=javakey;
+			break;
+		case "python":
+			key=pykey;
+			break
+		}		
+	*/	
+		x=change_color(pvar,"red",x);		//change color acc to key specifided in 1st parameter
+		x=change_color(control,"orange",x);
+		if(x.search("\'")!=-1)
+		x=catch_sing_quotes(x);
+		if(x.search("\"")!=-1)
+		x=catch_doub_quotes(x);//Change quotes color
+		if(x.search("\/")!=-1)
+		x=addcomments(x);
+		x=x.replace(/&nbsp;/g," ");		
+		
+		x=x.replace(/&lt;\/code&gt;/g,"</code>");
+		x=x.replace(/&lt;code&gt;/g,"<code>");
+		$("#prgm").html(x);
+	return x;		
+	}
+	
+	function change_color(key,color,data)
+	{
+		var start,end;
+		for(var i=0;i<key.length;i++)
+		{
+			start=0;
+			ind=data.indexOf(key[i],start);
+			if(ind!=-1)
+			{	end=key[i].length+ind;
+				data=addcode(ind,data,key[i],color,end);
+				start=ind+code.length+key[i].length+endcode.length;
+
+				while((ind=data.indexOf(key[i],start))!=-1)
+				{
+					if(regex.test(data.charAt(ind-1)) && regex.test(data.charAt(ind+key[i].length)))
+					{
+						end=key[i].length+ind;
+						data=addcode(ind,data,key[i],color,end);
+					}
+						start=ind+code.length+key[i].length+endcode.length;
+				}
+			}
+			
+		}
+		color="s"+color;	//for css class files
+		return data;
+	}
+	
+$(document).ready(function(){
+	var adiv=document.getElementById("prgm").innerHTML;
+	var cline=$("#current>#lno").html();
+	var lines=$(".content>div:last>#lno").html();	// Last div element inside content
+	var i=0;
+	var j=0;
+	var x;
+	var t=-1;
+	var program;
+	
+$(".code").keypress(function(e){
+	x=$("#prgm").html();
+		x=x.replace(/&nbsp;/g," ");
+	if(x=="<br>")
+		$("#prgm").text("//Enter code");
+	
+	t=x.search("</span>");
+	while(t!=-1)
+	{
+		j++;
+		x=x.substring(t+endcode.length);
+		t=x.search("</span>");
+	}
+	while(j>=lines)
+	{
+		$(".line").append("<span id='lno'>"+(++cline)+"</span><br>");
+		++lines;
+	}
+	j=0;
+	t=-1;
+
+		});
+		$("#syntax").click(function(){
+				var x=$("#prgm").html();
+				x=check(x);
+			
+		});
+	
+});
+</script>
+</head>
+<body>
+<span class="select">
+<button value="on" id="syntax">Add Syntax</button>
+	<select class="lang">
+	<option value="gcc" selected>C</option> 
+	<option value="cpp">C++</option>
+	<option value="java">Java</option>
+	<option value="ruby">Ruby</option>
+	<option value="php">PHP</option>
+	<option value="python">C</option>
+	<option value="perl">Perl</option>
+	<option value="none" >No syntax</option>
+	</select>	
+	</span>
+	<br><br>	
+<div class="content">
+	<div class="line" id="current">
+		<span id="lno">1</span><br>
+	</div>
+	<div class="code" id="data1">
+		<pre id="prgm">
+	#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+
+void qsort1(int *v,int low,int high);
+//void swap(int[]
+int main()
+{
+int i,l;
+int *nos;
+puts("Enetr the length");
+scanf("%d",&l);
+nos=(int *)malloc( l * sizeof(int) );
+puts("Numbers are");
+for(i=0;i&lt;l;i++)
+	scanf("%d",(nos + i));
+
+puts("Unsorted array");
+for(i=0;i&lt;l;i++)
+	printf("%d",*(nos+i));
+qsort1(nos,0,l);
+puts("Sorted array");
+for(i=0;i&lt;l;i++)
+	printf("%d",*(nos+i));
+
+
+&lt
+}
+void qsort1(int a[],int low,int high)
+{
+int pivot=(low+high)/2;
+if(low&lt;high)
+{
+int i=0;
+//Division acc to pivoit
+for(;i&lt;high;i++)
+{
+if(a[i]&lt;a[pivot])
+{
+if(i&gt;=pivot)
+{
+int temp=a[i];
+a[i]=a[pivot];
+a[pivot]=temp;
+
+temp=i;
+i=pivot;
+pivot=temp;
+}
+
+}
+else
+{
+if(i&lt;pivot)
+{
+int temp=a[i];
+a[i]=a[pivot];
+a[pivot]=temp;
+
+temp=i;
+i=pivot;
+pivot=temp;
+
+}
+}
+}
+qsort1(a,low,pivot-1);
+qsort1(a,pivot+1,high);
+}
+else return;
+}																																		
+																																
+		</pre>
+</div>
+
+</body>
+</html>

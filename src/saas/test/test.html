@@ -1,0 +1,42 @@
+<html>
+<head>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+	
+	function addspan(start, str, temp)
+	{
+		var end=temp.length;
+		var s1=str.substring(0,start);
+		var s2=str.substring(end);
+		return s1+"<span class=col>"+temp+"</span>"+s2;
+	}
+	function check()
+	{
+		var x=$("span").html();
+		var ckey=new Array("auto","break","hi");
+		var start=0;	
+		var ind=-1;
+		for(var i=0;i<ckey.length;i++)
+		{
+			ind=x.indexOf(ckey[i],start);
+			alert(ind);
+			if(ind!=-1)
+			{
+				x=addspan(ind,x,ckey[i]);
+				start=ind;
+			}
+		}
+		$("span").html(x);
+	}
+	</script>
+	<style type="text/css">
+	.col{
+	color:red;
+	}
+	</style>
+</head>
+
+<body onload="check()">
+<span>hi man wassup u ok</span>
+</body>
+</html>

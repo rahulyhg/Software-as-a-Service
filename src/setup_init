@@ -1,0 +1,20 @@
+1.Install lampp
+
+2. 
+create a script with follwing wrting to run lampp with mysql privileges
+#!/bin/bash
+chmod 755 /opt/lampp/etc/my.cnf
+chmod -R 777 /opt/lampp/var/mysql
+chown -hR root /opt/lampp
+
+/opt/lampp/lampp $1
+
+
+3. For c,C++ to run, replace follwing lib files, so that it takes system library files:
+ mv /opt/lampp/lib/libz.so.1 /opt/lampp/lib/libz.so.2
+  mv /opt/lampp/lib/libgcc_s.so.1 /opt/lampp/lib/libgcc_s.so.2
+  
+4. Once this is done,
+run all the database files sqL from init_sql folder.
+
+

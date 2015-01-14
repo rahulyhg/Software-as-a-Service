@@ -1,0 +1,17 @@
+<?php
+if(isset($_SESSION['UNAME']))
+unset($_SESSION['UNAME']);
+if(isset($_SESSION['APPS']))
+unset($_SESSION['APPS']);
+if(isset($_SESSION['MONEY']))
+unset($_SESSION['MONEY']);
+if(isset($_SESSION['PAY']))
+unset($_SESSION['PAY']);
+if(isset($_SESSION['TIMEIN']))
+unset($_SESSION['TIMEIN']);
+if(isset($_SESSION['TIMEOUT']))
+unset($_SESSION['TIMEOUT']);
+if(isset($_SESSION['uname']))
+unset($_SESSION['uname']);
+header("Location:index.html");
+?>

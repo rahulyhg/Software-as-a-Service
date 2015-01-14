@@ -1,0 +1,83 @@
+<html>
+<head>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+jQuery(window).bind("beforeunload",function(){
+		$.ajax({
+		url:'../date.php',		
+		success:function(res){alert("You have to pay"+res);},
+		error :function(err){alert("error")}
+		});
+		});
+</script>
+<style type="text/css">
+body {
+	margin:0px;
+	padding:0px;
+	background-color: #121213;
+	color:silver;
+}
+.n1{
+font-size:15px;
+}
+</style>
+
+<script type="text/javascript" src="jquery.js">
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+$(".s1").click(function(){
+
+ $.ajax({
+	type:'POST',
+	data:{n1:$('.n1').val()},
+	url:"mysql.php",success:function(result)
+	{
+	      $(".txt").html(result);
+	}
+	});
+});
+});
+
+</script>
+<link href="../css/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link href="../css/jquery.ennui.contentslider.css" rel="stylesheet" type="text/css" media="screen,projection" />
+
+<link href="../css/logout.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body style="margin:0px;" onload="iframeon()" >
+
+<div id="templatemo_menu_wrapper">
+
+    <div id="templatemo_menu">
+    
+        <ul>
+            <li><a href="../selectapp.php">My Home</a></li>
+            <li><a href="../configure.html" >Configure</a></li>
+            <li><a href="loginsql.html" >SQL</a></li>
+             <li><a href="../payments.php">Payments</a></li>
+        </ul>    	
+    
+    </div> <!-- end of templatemo_menu -->
+</div> <!-- end of menu wrapper -->
+
+
+		<div class="header">
+			<div class="heading">SQL</div>
+			<span class="logbtn"><a href="../signout.php">Signout</a></span>	
+		</div>
+
+
+<h4>SQL statements:-</h4>
+<textarea cols="45" rows="10" class=n1 value=""></textarea><br>
+<input type=submit style="padding:5px; font-size:15px" class=s1 value="Execute">
+<br>
+<hr/>
+
+<h4>Output</h4>
+<div class="txt" style="color:black;height:220px;width:500px;background-color:white;border:5px ridge white;overflow:scroll"></div>
+</body>
+</html>
+

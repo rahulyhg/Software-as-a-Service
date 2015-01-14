@@ -1,0 +1,280 @@
+<!-- 
+Bugs involved are regarding spaces 
+Soln :  1)use php
+	2)creat a btn "Adjust"
+	3)Ajaax call
+	4)ELiminate at each line "";
+
+
+
+-->
+<html>
+	
+<head>
+	
+	<style type=text/css>
+body {
+	margin:0px;
+	padding:0px;
+	line-height:1.5em; 
+	background-color: #121213;
+	color:#717174;
+	
+}
+
+		.layer
+		{
+			width:100%;
+			position:absolute;
+			margin:0px auto 0px;
+		}
+		
+		.subpart{
+		
+		position:relative;
+		width:1000px;
+		margin:0px auto;
+		top:70px;
+		}
+		
+		
+		.codes
+		{
+		float:left;
+		margin-left:1px;
+		padding:2px;
+		max-width:99%;
+		}
+		.rightpart{
+			float: right;
+			width: 30%;
+		}
+		#left
+		{
+			float:left;
+			width:65%;
+			border-right:3px ridge #ffddaa;
+			margin-top: 5px ;
+			margin-left:auto;
+			margin-right: auto;
+		}
+		#txta
+		{
+		font-size:10.3pt;
+		min-width:98%;
+		min-height:400px;
+		max-width: 98%;
+		max-height:400px;
+		display:none
+		}
+		iframe{
+		font-size:10.3pt;
+		min-width:600px;
+		min-height:400px;
+		
+		}
+		#right
+		{
+			margin:4px auto;
+			border:5px solid #dadede;
+			border-radius: 10px 10px 10px 10px;
+			height:50%;
+			padding:5px; 
+			font-style: bold italic;
+			color:#11aaff;
+			font-size:25px;
+		}
+		.lang
+		{
+			list-style-type: none;
+			font-style: bold italic;
+			color:#ffaaff;
+			padding-bottom:20px;
+		}
+		.lan-in{
+		margin:5px;
+		padding:5px;
+		line-height:35px;
+		}
+		a:hover{
+		color:red;
+		}
+		.bottom-right{
+			display: none;
+			border: 5px solid #dadede;
+			border-radius: 10px;
+			height:23%;
+			padding:5px;
+		}
+
+	</style>
+	<link href="../css/logout.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+	
+	function cleara()
+	{
+	document.getElementById("txta").value="";
+	}
+	function compile()
+	{
+		var txt1=$(":text").val();
+		if(txt1=="")
+		{
+		alert("Please enter some code name");
+		return false;
+		}
+		if($(":checked").val()=="")
+		{
+		alert("select programming lang");
+		return false;
+		}
+		
+
+	var txt=document.getElementById("richtxt").contentWindow.document.getElementById("prgm").innerHTML;
+		$("#txta").val(txt);
+		if($("#txta").val()=="")
+		{	
+		alert("Write codes");
+		return false;
+		}
+		
+	//	if(
+	}
+	$(document).ready(function(){
+		
+		$("input#rad").click(function(){
+			if($(this).val()>4)
+			$(".bottom-right").show();
+			else
+			$(".bottom-right").hide();
+			});
+			$(".logbtn").click(function(){
+			top.location("signout.php");
+			});
+			
+	jQuery(window).on("unload",function(){
+			$.ajax({
+			url:'../date.php',		
+			success:function(res){alert("You have to pay"+res);},
+			fail: function(res){
+			alert("No pay");}
+			});
+		});
+	$(".lan-in").mouseover(function(){
+	$(this).css({"font-size":"30pt","color":"silver"});		
+	});
+	$(".lan-in").mouseout(function(){
+	$(this).css({"font-size":"","color":"#11aaff"});		
+	});
+		
+	$("#right").mouseover(function(){
+	$(this).css("border-color","silver");		
+	});
+	$("#right").mouseout(function(){
+	$(this).css("border-color","white");		
+	});
+	
+
+  
+	//$("#txta").css("font-size",$(".fontt").val());
+	});
+	var idoc;
+	function iframeon()
+	{
+		var ifrme=document.getElementById("richtxt");
+		var ibody=ifrme.contentWindow.document.body;
+		idoc=ifrme.contentWindow.document;
+		idoc.getElementById("prgm").contentEditable="true";
+		idoc.getElementById("prgm").focus();
+	}
+</script>
+<title>Online Compilers
+	</title>
+<link href="../css/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link href="../css/jquery.ennui.contentslider.css" rel="stylesheet" type="text/css" media="screen,projection" />
+
+<link href="../css/logout.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body style="margin:0px;" onload="iframeon()" >
+
+<div id="templatemo_menu_wrapper">
+
+    <div id="templatemo_menu">
+    
+        <ul>
+            <li><a href="../selectapp.php">My Home</a></li>
+            <li><a href="../configure.html" >Configure</a></li>
+            <li><a href="online.htm" class="current">Compiler</a></li>
+             <li><a href="../payments.php">Payments</a></li>
+        </ul>    	
+    
+    </div> <!-- end of templatemo_menu -->
+</div> <!-- end of menu wrapper -->
+
+
+	<div class="layer" style="height:100%">
+		<div class="header">
+			<div class="heading">Online compilers</div>
+			<span class="logbtn"><a href="../signout.php">Signout</a></span>	
+		</div>
+		
+		<div class="subpart">
+		<form action="intercomp.php" onsubmit="return compile()" method="POST" >
+		
+		<div id="left">
+		Enter the file name:<input name="nm" type="text"/>
+			
+			<div class="codes">
+	
+				
+			
+	<iframe id="richtxt" src="txtcode.html"></iframe>
+	<textarea name="val" cols="94"  id="txta"></textarea>
+	
+	
+						<br>
+						<span style="clear:both;float:right;">
+						<input type="button" value="Clear" onclick="cleara()"/>
+					<input type=submit class="compile" value="Compile" />
+						</span>
+		
+			</div>
+		
+		</div>
+	<div class="rightpart">
+		
+	
+	<div id="right">
+		<span class="lan-in"><input type="radio" name="lan" value="1" id="rad" checked>C</span><br/>
+		<span class="lan-in"><input type="radio" name="lan" value="2" id="rad">C++</span><br/>
+		<span class="lan-in"><input type="radio" name="lan" value="3" id="rad">Java</span><br/>
+		<span class="lan-in"><input type="radio" name="lan" value="4" id="rad">Bash</span><br/>
+		<span class="lan-in"><input type="radio" name="lan" value="5" id="rad">PHP</span><br/>
+		<span class="lan-in"><input type="radio" name="lan" value="6" id="rad">Ruby</span><br/>
+		<span class="lan-in"><input type="radio" name="lan" value="7" id="rad">Perl</span><br/>
+		<span class="lan-in"><input type="radio" name="lan" value="8" id="rad">Python</span><br/>
+		<a href="loginsql.html"><span class="lan-in" style="color:blue"><input type="radio" name="lan" value="9" id="rad">SQL</span></a><br/>
+	</div>
+	<fieldset class="bottom-right">
+	<legend>	Input</legend>
+		<textarea name="ip" style="max-width:95%; max-height:80%;min-width:95%; min-height:80%"></textarea>
+	</fieldset>
+	<!--<div id="ri1ght">
+		<form action="upfile.php" method="post" enctype="multipart/form-data">
+		<label for="file">Filename:</label>
+		<input type="file" name="file" id="file" />
+		<br />
+		<input type="submit" name="submit" value="Submit" />
+		</form>
+	
+	</div>
+	-->
+	</div>
+	</form>
+	</div>
+	</div>
+</body>
+</html>
